@@ -2,7 +2,7 @@ import { lucia } from "../../lib/auth";
 import { generateId } from "lucia";
 import { db, User } from "astro:db";
 
-export async function POST(context) {
+export async function createNewUser(context) {
 	const formData = await context.request.formData();
 	const username = formData.get("username");
 

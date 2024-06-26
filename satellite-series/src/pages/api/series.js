@@ -1,4 +1,4 @@
-import { db, Series, eq, Review, and, like } from "astro:db";
+import { db, Series, eq, Review, and, like} from "astro:db";
 
 
 
@@ -89,15 +89,27 @@ function parseEpisodesPerSeason(episodes){
     return newEpisodes;
 }
 
-export async function postNewSeries(seriesForm) {
+async function countSeriesId(){
+    const seriesDb = await db.select().from(Series);
+    return seriesDb.length + 1;
+}
 
+export async function POST(context) {
+
+    const formData = await context.request.formData();
+    const title = formData.get('title');
+    const streamingService = formData.get('streamingService');
+    const episodesPerSeason = formData.get('episodesPerSeason');
+    const description = formData.get('description');
+    const category = formData.get('category');
+    const image = formData.get('image');
 
     const newSeries = {};
 
-    newSeries.title = seriesForm.title;
-    newSeries.streamingService = seriesForm.streamingService;
+    newSeries.title = title;
+    newSeries.streamingService = streamingService;
     try {
-        newSeries.episodesPerSeason = parseEpisodesPerSeason(seriesForm.episodesPerSeason);
+        newSeries.episodesPerSeason = parseEpisodesPerSeason(episodesPerSeason);
     }
     catch (error){
         console.error(error);
@@ -105,12 +117,14 @@ export async function postNewSeries(seriesForm) {
             status: 501
         });
     }
-    newSeries.description = seriesForm.description || 'No description available';
-    newSeries.category = seriesForm.category || 'No category';
-    newSeries.image = seriesForm.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkua4zc6vGKg6FGl5tqsmqbbva__CLi84gvQ&s";
+    newSeries.description = description || 'No description available';
+    newSeries.category = category || 'No category';
+    newSeries.image = image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkua4zc6vGKg6FGl5tqsmqbbva__CLi84gvQ&s";
 
 	try {
-        newSeries.id = db.select({ value: count(Series.id) }).from(Series); // No se si estan bien la mayuscula en Series
+        // newSeries.id = await db.select({ value: count(Series.id) }).from(Series); // No se si estan bien la mayuscula en Series
+        newSeries.id = await countSeriesId();
+        console.log(newSeries.id);
         newSeries.ratings = [];
         newSeries.comments = [];
         await db.insert(Series).values(newSeries);
@@ -122,8 +136,5 @@ export async function postNewSeries(seriesForm) {
         });
     }
 
-    return new Response(JSON.stringify({ message: "Series added succsesfully" }), {
-        status: 201
-    });
-	// return context.redirect("/catalog");
+	return context.redirect("/");
 }

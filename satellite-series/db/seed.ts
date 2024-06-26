@@ -51,7 +51,7 @@ export default async function seed() {
       id: 4,
       title: "The Redeem Team",
       streamingService: "Netflix",
-      episodesPerSeason: [10],
+      episodesPerSeason: [1],
       description: `After their shocking performance at the 2004 Olympics, the US men's basketball team seeks redemption as they pursue Gold at the 2008 Beijing Games. Watch all you want. LeBron James, Kobe Bryant, Dwyane Wade, Carmelo Anthony, Carlos Boozer, Mike Krzyzewski and more appear in this film.`,
       category: "Violence",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkua4zc6vGKg6FGl5tqsmqbbva__CLi84gvQ&s",
