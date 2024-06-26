@@ -8,7 +8,7 @@ const { series, reviews } = Astro.props;
 <div class="border border-gray-300 p-2 rounded-lg flex flex-col items-center bg-white shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
 
   <div class="w-full">
-    <InputReviewComponent/>
+    <InputReviewComponent series={series}/>
     <hr class="my-4 w-full border-gray-300 dark:border-gray-700" />
     {reviews.map((review, index) => (
       <>

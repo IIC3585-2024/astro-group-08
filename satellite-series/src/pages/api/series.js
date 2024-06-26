@@ -37,7 +37,7 @@ export async function getFilteredSeries(filter = {}) {
         }
 
         const allSeries = await query;
-        console.log(allSeries);
+
 
         return new Response(JSON.stringify(allSeries));
     } catch (error) {
@@ -124,7 +124,7 @@ export async function POST(context) {
 	try {
         // newSeries.id = await db.select({ value: count(Series.id) }).from(Series); // No se si estan bien la mayuscula en Series
         newSeries.id = await countSeriesId();
-        console.log(newSeries.id);
+
         newSeries.ratings = [];
         newSeries.comments = [];
         await db.insert(Series).values(newSeries);

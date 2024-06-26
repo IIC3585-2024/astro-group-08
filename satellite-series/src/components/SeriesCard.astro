@@ -12,7 +12,7 @@ const { series } = Astro.props;
       <SeriesCoverImage src={series.image} alt={series.title} size="M" />
     </a>
       <div class="flex flex-col items-start ml-2">
-        <ReviewsComponent></ReviewsComponent>
+        <ReviewsComponent series={series}></ReviewsComponent>
         <div class="mt-2 italic text-gray-600 dark:text-gray-400">Categoria: {series.category}</div>
         <div class="mt-2 italic text-gray-600 dark:text-gray-400">Servicio: {series.streamingService}</div>
         <div class="mt-2 italic text-gray-600 dark:text-gray-400">Temporadas: {series.episodesPerSeason}</div>
