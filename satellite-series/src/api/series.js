@@ -1,4 +1,4 @@
-import { db, Series, eq } from "astro:db";
+import { db, Series, eq, Review } from "astro:db";
 
 
 
@@ -17,7 +17,7 @@ export async function getSeries() {
 
 export async function getSeriesById(id) {
     try {
-        console.log("id", id);
+
         if(!id)         return new Response(JSON.stringify({ error: "Error fetching series" }), {
             status: 500
         });
@@ -31,6 +31,20 @@ export async function getSeriesById(id) {
             status: 500
         });
     }
+}
+
+
+export async function getReviewsBySeriesId(id) {
+    try {
+        const allReviews = await db.select().from(Review).where(eq(Review.seriesId, id));
+        return new Response(JSON.stringify(allReviews));
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({ error: "Error fetching reviews" }), {
+            status: 500
+        });
+    }
+
 }
 
 function parseEpisodesPerSeason(episodes){

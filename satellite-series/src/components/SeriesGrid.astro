@@ -13,6 +13,7 @@ let seriesData: Series[] = [];
 try {
 
     const response = await getSeries();
+
     if (!response.ok) throw new Error(response.statusText);
     seriesData = await response.json();
 

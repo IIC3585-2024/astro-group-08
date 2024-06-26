@@ -6,8 +6,7 @@ export interface Series {
     description: string;
     category: string;
     image: string;
-    ratings: number[];
-    comments: string[]; 
+    reviews?: Review[];
   }
   
 export interface Review {
