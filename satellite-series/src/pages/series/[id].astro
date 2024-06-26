@@ -8,11 +8,11 @@ import Series from '../../interfaces/interfaces';
 import ReviewsBox from '../../components/reviewsBox.astro';
 
 
-// Extract the `id` parameter from the URL
+
 const { params } = Astro;
 const seriesId = parseInt(params.id, 10);
 
-// Fetch the series data based on the `id`
+
 let series: Series  = {
     id: 0,
     title: '',
@@ -50,11 +50,11 @@ try {
 ---
 <main>
     <Layout title="series">
-<!-- Display the series data -->
+
 {series && (
     <div class="p-5">
 <SeriesCard series={series} />
-<ReviewsBox series={series} reviews ={reviews} />
+<ReviewsBox series={series} reviews ={reviews}/>
 </div>
 )} 
 
