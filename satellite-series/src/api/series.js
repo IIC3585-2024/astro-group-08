@@ -1,4 +1,4 @@
-import { db, Series, eq, Review } from "astro:db";
+import { db, Series, eq, Review, and, like } from "astro:db";
 
 
 
@@ -13,6 +13,39 @@ export async function getSeries() {
         });
     }
 
+}
+
+export async function getFilteredSeries(filter = {}) {
+    try {
+        let query = db.select().from(Series);
+
+        // Build the query based on the filter object
+        const conditions = [];
+        if (filter.title && filter.title.length > 0) {
+            conditions.push(like(Series.title, `%${filter.title}%`));
+        }
+        if (filter.category) {
+            conditions.push(eq(Series.category, filter.category));
+        }
+        if (filter.streamingService) {
+            conditions.push(eq(Series.streamingService, filter.streamingService));
+        }
+        // Add other filter conditions as needed
+
+        if (conditions.length > 0) {
+            query = query.where(and(...conditions));
+        }
+
+        const allSeries = await query;
+        console.log(allSeries);
+
+        return new Response(JSON.stringify(allSeries));
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({ error: "Error fetching series" }), {
+            status: 500
+        });
+    }
 }
 
 export async function getSeriesById(id) {

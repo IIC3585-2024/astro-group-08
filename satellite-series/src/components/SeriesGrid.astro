@@ -1,33 +1,41 @@
 ---
 
-import {getSeries} from "../api/series"
-import SeriesCoverImage from './SeriesCoverImage.astro';
-import ReviewsComponent from "./ReviewsComponent.astro";
+import {getFilteredSeries } from "../api/series"
+
 import Series from "../interfaces/interfaces";
 import SeriesCard from "./SeriesCard.astro";
 
 
-
 let seriesData: Series[] = []; 
 
+
 try {
+  const title = Astro.url.searchParams.get('title');
+const response = await getFilteredSeries({title});
 
-    const response = await getSeries();
 
-    if (!response.ok) throw new Error(response.statusText);
-    seriesData = await response.json();
+if (!response.ok) throw new Error(response.statusText);
+seriesData = await response.json();
 
 } catch (error) {
-    console.error('Error fetching series:', error);
-    Astro.redirect('/');
+console.error('Error fetching series:', error);
+Astro.redirect('/');
 }
+
 
 
 ---
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-6">
   {seriesData.map(series => (
     <SeriesCard series={series} />
   ))}
 </div>
 
+<script>
+    import {titleFilter} from '../stores/SearchStore'
+titleFilter.subscribe(async (value) => {
+
+
+});
+</script>
