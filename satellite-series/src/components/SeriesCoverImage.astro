@@ -37,10 +37,12 @@ const handleError = () => {
       </svg>
     </div>
   )}
+
   <img
     src={`${src}`}
     alt={alt}
 
-    class={`series-cover ${loading ? 'hidden' : 'block'}`}
+    class={`object-contain object-scale-down object-fill  ${loading ? 'hidden' : 'block'}  h-60`}
   />
+
 </div>

@@ -1,0 +1,49 @@
+---
+import { getSeriesById } from '../../api/series';
+import SeriesCard from '../../components/SeriesCard.astro';
+import SeriesCoverImage from '../../components/SeriesCoverImage.astro';
+import ReviewsComponent from '../../components/ReviewsComponent.astro';
+import Layout from '../../layouts/Layout.astro';
+import Series from '../../interfaces/interfaces';
+
+
+// Extract the `id` parameter from the URL
+const { params } = Astro;
+const seriesId = parseInt(params.id, 10);
+
+// Fetch the series data based on the `id`
+let series: Series  = {
+    id: 0,
+    title: '',
+    streamingService: '',
+    episodesPerSeason: [],
+    description: '',
+    category: '',
+    image: '',
+    ratings: [],
+    comments: [],
+    };
+
+try {
+    if(seriesId){
+  const response = await getSeriesById(seriesId);
+  if (!response.ok) throw new Error(response.statusText);
+  series = await response.json()
+
+}
+} catch (error) {
+  console.error('Error fetching series:', error);
+
+}
+---
+<main>
+    <Layout title="series">
+<!-- Display the series data -->
+{series && (
+    <div class="p-5">
+<SeriesCard series={series} />
+</div>
+)} 
+
+</Layout>
+</main>

@@ -1,0 +1,44 @@
+---
+import SeriesCoverImage from "./SeriesCoverImage.astro";
+import ReviewsComponent from "./ReviewsComponent.astro";
+
+const { series } = Astro.props;
+---
+
+<astro-series-card data-series={JSON.stringify(series)}>
+  <div class="border border-gray-300 p-2 rounded-lg flex flex-col items-center bg-white shadow-md dark:bg-gray-800 dark:border-gray-700" id={`series-${series.id}`}>
+    <div class="flex flex-row">
+      <SeriesCoverImage src={series.image} alt={series.title} size="M" />
+      <div class="flex flex-col items-start ml-2">
+        <ReviewsComponent></ReviewsComponent>
+        <div class="mt-2 italic text-gray-600 dark:text-gray-400">Categoria: {series.category}</div>
+        <div class="mt-2 italic text-gray-600 dark:text-gray-400">Servicio: {series.streamingService}</div>
+        <div class="mt-2 italic text-gray-600 dark:text-gray-400">Temporadas: {series.episodesPerSeason}</div>
+        <div class="mt-2 italic text-gray-600 dark:text-gray-400">Capitulos(c/t): {series.episodesPerSeason}</div>
+      </div>
+    </div>
+    <div class="flex flex-col items-start mt-2 w-full text-gray-800 dark:text-gray-200">
+      <div class="font-bold">{series.title}</div>
+      <div class="mt-2">{series.description}</div>
+    </div>
+  </div>
+</astro-series-card>
+
+<script>
+  class AstroSeriesCard extends HTMLElement {
+    constructor() {
+      super();
+      const seriesData = JSON.parse(this.dataset.series || "");
+
+      const button = this.querySelector(`#series-${seriesData.id}`);
+      if (!button) return;
+      button.addEventListener('click', () => {
+        console.log('click', seriesData.title);
+      });
+
+    }
+
+  }
+
+  customElements.define('astro-series-card', AstroSeriesCard);
+</script>

@@ -13,5 +13,7 @@ export default defineConfig({
     optimizeDeps: {
       exclude: ["astro:db"]
     }
-  }
+  },
+    output: 'server',
+
 });
