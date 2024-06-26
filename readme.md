@@ -1,10 +1,9 @@
-Claro, aquí tienes el README.md en español:
 
 ---
 
-# Aplicación Satellite Series
+# Aplicación de series
 
-¡Bienvenido a la aplicación Satellite Series! Esta aplicación te permite explorar y revisar tus series de televisión favoritas.
+Esta aplicación te permite explorar y revisar tus series de televisión favoritas.
 
 ## Empezando
 
@@ -31,8 +30,8 @@ Para comenzar con la aplicación, sigue estos pasos:
 ## Funcionalidades
 
 - Ver una lista de series de televisión.
-- Busqueda por titulo
-- Clickear serie para ver reseñas y datos detallados
+- Búsqueda por título.
+- Clickear serie para ver reseñas y datos detallados.
 - Agregar reseñas para series de televisión.
 - Autenticación de usuarios (funcionalidad básica incluida).
 - Navegación entre diferentes vistas.
@@ -46,7 +45,12 @@ Para comenzar con la aplicación, sigue estos pasos:
 
 ## Tecnologías Utilizadas
 
-- Astro 
+- Astro
 - TypeScript
 - Tailwind CSS para estilos
+
+## Credenciales de Usuario por Defecto
+
+- Usuario: admin
+- Contraseña: password
 
