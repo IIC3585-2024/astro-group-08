@@ -3,7 +3,6 @@ import SeriesCoverImage from "./SeriesCoverImage.astro";
 import ReviewsComponent from "./ReviewsComponent.astro";
 
 const { series } = Astro.props;
-console.log(series);
 const totalEpisodes = series.episodesPerSeason.reduce((sum, episodes) => sum + episodes, 0);
 ---
 

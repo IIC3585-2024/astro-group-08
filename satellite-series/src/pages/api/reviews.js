@@ -16,7 +16,6 @@ export async function POST(context) {
     const seriesId = formData.get('seriesId');
     const userId =  context.locals.user.id;
     const username = context.locals.user.username;
-    console.log(seriesId, userId, content, rating);
     const newReview = {};
     newReview.comment = content || '';
     newReview.rating = rating;
