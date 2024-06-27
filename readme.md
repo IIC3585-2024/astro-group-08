@@ -39,8 +39,6 @@ Para comenzar con la aplicación, sigue estos pasos:
 
 ## Problemas Conocidos
 
-- Los filtros avanzados para series de televisión aún no están implementados.
-- La funcionalidad de creación de usuarios no está completamente implementada (usuarios funcionales por defecto existen).
 - La barra de navegación no funciona correctamente en dispositivos móviles.
 
 ## Tecnologías Utilizadas
