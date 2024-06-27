@@ -1,9 +1,9 @@
 ---
 
 const { series } = Astro.props;
-
+const { user }: any = Astro.locals;
 ---
-
+{user ?
 <div class="mb-6">
   <form class="max-w-sm pr-2 flex-grow" method="post" action="/api/reviews" id="review-form">
     <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingrese su review</label>
@@ -30,7 +30,7 @@ const { series } = Astro.props;
 
   </div>
 
-</div>
+</div> : <div class="text-center text-white">Log in to add a review</div>}
 
 <script>
 

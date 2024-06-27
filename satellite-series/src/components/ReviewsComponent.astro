@@ -5,6 +5,7 @@
 
 const { series } = Astro.props;
 
+
 ---
 <div class="p-2">
 
@@ -17,7 +18,7 @@ const { series } = Astro.props;
         </svg>
         <p class="ms-2 text-sm font-bold text-gray-900 dark:text-white">{series.rating ? series.rating.toFixed(1) : ""}</p>
         </div>
-
+        <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">{series.numberOfReviews } Reviews</a>
     </div> : 
     
     <div class="flex items-center flex-col">
