@@ -1,30 +1,26 @@
-import { lucia } from "../../lib/auth";
+import { lucia } from "../../../lib/auth";
 import { generateId } from "lucia";
 import { db, User } from "astro:db";
 
-export async function createNewUser(context) {
+export async function POST(context) {
 	const formData = await context.request.formData();
 	const username = formData.get("username");
+
+
 
 	
     
 	const password = formData.get("password");
     
-	if (typeof password !== "string" || password.length < 6 || password.length > 255) {
-		return new Response(JSON.stringify({
-			error: "Invalid password: must be 6-255 characters long",
-		}), {
-			status: 400
-		});
-	}
+	console.log(password);
 
 	const userId = generateId(10);
 
 	try {
 		await db.insert(User).values({
 			id: userId,
-			username,
-			password,
+			username: username,
+			password: password,
 		});
 	} catch (error) {
 		return new Response(JSON.stringify({

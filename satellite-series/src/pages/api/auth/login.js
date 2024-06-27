@@ -6,23 +6,8 @@ export async function POST(context) {
 	const username = formData.get("username");
 
 
-	if (
-		typeof username !== "string" ||
-		username.length < 3 ||
-		username.length > 31 ||
-		!/^[a-z0-9_-]+$/.test(username)
-	) {
-		return new Response(JSON.stringify({ error: "Invalid username" }), {
-			status: 400
-		});
-	}
-
 	const password = formData.get("password");
-	if (typeof password !== "string" || password.length < 6 || password.length > 255) {
-		return new Response(JSON.stringify({ error: "Invalid password" }), {
-			status: 400
-		});
-	}
+
 
 	let existingUser;
 	try {

@@ -10,6 +10,7 @@ const Series = defineTable({
     category: column.text(),
     image: column.text({ optional: true }),
     rating: column.number({ optional: true }),
+    numberOfReviews: column.number({}),
 
   }
 });
