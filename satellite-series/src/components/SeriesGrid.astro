@@ -11,15 +11,21 @@ let seriesData: Series[] = [];
 
 try {
   const title = Astro.url.searchParams.get('title');
-const response = await getFilteredSeries({title});
+  const category = Astro.url.searchParams.get('category');
+  const streamingService = Astro.url.searchParams.get('service');
+  const minRating = Astro.url.searchParams.get('minRating');
+  const maxRating = Astro.url.searchParams.get('maxRating');
+  
+  const response = await getFilteredSeries({title, category, streamingService, minRating, maxRating});
 
 
-if (!response.ok) throw new Error(response.statusText);
-seriesData = await response.json();
+
+  if (!response.ok) throw new Error(response.statusText);
+  seriesData = await response.json();
 
 } catch (error) {
-console.error('Error fetching series:', error);
-Astro.redirect('/');
+  console.error('Error fetching series:', error);
+  Astro.redirect('/');
 }
 
 

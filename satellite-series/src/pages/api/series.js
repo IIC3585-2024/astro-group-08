@@ -1,4 +1,4 @@
-import { db, Series, eq, Review, and, like} from "astro:db";
+import { db, Series, eq, Review, and, like, gte, lte} from "astro:db";
 
 
 
@@ -25,12 +25,17 @@ export async function getFilteredSeries(filter = {}) {
             conditions.push(like(Series.title, `%${filter.title}%`));
         }
         if (filter.category) {
-            conditions.push(eq(Series.category, filter.category));
+            conditions.push(like(Series.category, `%${filter.category}%`));
         }
         if (filter.streamingService) {
-            conditions.push(eq(Series.streamingService, filter.streamingService));
+            conditions.push(like(Series.streamingService, `%${filter.streamingService}%`));
         }
-        // Add other filter conditions as needed
+        if(filter.minRating){
+            conditions.push(gte(Series.rating, filter.minRating));
+        }
+        if(filter.maxRating){
+            conditions.push(lte(Series.rating, filter.maxRating));
+        }
 
         if (conditions.length > 0) {
             query = query.where(and(...conditions));
