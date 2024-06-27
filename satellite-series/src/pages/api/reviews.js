@@ -2,8 +2,8 @@ import { db, Series, eq, Review, and, like} from "astro:db";
 
 
 async function countReviewsId(){
-    const seriesDb = await db.select().from(Review);
-    return seriesDb.length + 1;
+    const reviewDb = await db.select().from(Review);
+    return reviewDb.length + 1;
 }
 
 export async function POST(context) {
@@ -30,7 +30,7 @@ export async function POST(context) {
         newReview.id = await countReviewsId();
 
         await db.insert(Review).values(newReview);
-        return new Response(JSON.stringify({ message: "Review added successfully" }), {
+        return new Response(JSON.stringify({ message: "Review added successfully", seriesId: seriesId}), {
             status: 201,
           });
 
