@@ -120,6 +120,7 @@ export async function POST(context) {
     newSeries.description = description || 'No description available';
     newSeries.category = category || 'No category';
     newSeries.image = image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkua4zc6vGKg6FGl5tqsmqbbva__CLi84gvQ&s";
+    newSeries.numberOfReviews = 0;
 
 	try {
         // newSeries.id = await db.select({ value: count(Series.id) }).from(Series); // No se si estan bien la mayuscula en Series

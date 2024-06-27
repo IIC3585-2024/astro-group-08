@@ -43,7 +43,7 @@ export default async function seed() {
       id: 3,
       title: "Cyberpunk Edgerunners",
       streamingService: "Netflix",
-      episodesPerSeason: [1],
+      episodesPerSeason: [10],
       description: `In a dystopia riddled with corruption and cybernetic implants, a talented but reckless street kid strives to become a mercenary outlaw — an edgerunner. Watch all you want.`,
       category: "Inspiring",
       image: "https://http2.mlstatic.com/D_NQ_NP_776646-MLC52223341666_102022-O.webp",
