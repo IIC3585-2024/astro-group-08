@@ -7,12 +7,12 @@ const { series } = Astro.props;
 <div class="mb-6">
   <form class="max-w-sm pr-2 flex-grow" method="post" action="/api/reviews" id="review-form">
     <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingrese su review</label>
-    <input type="text" name="content" id="large-input" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <input type="text" name="content" id="large-input" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
     <div class ="pt-2 flex flex-row">
         
 
-            <select id="countries" name="rating" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option selected>Score</option>
+            <select id="countries" name="rating" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+              <option value="" disabled selected>Score</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -33,6 +33,7 @@ const { series } = Astro.props;
 </div>
 
 <script>
+
   document.addEventListener('DOMContentLoaded', () => {
     const reviewForm = document.getElementById('review-form') as any;
 
@@ -52,14 +53,31 @@ const { series } = Astro.props;
         const result = await response.json();
         if (response.ok) {
           alert('Review added successfully');
-          reviewForm.reset(); // Reset the form after successful submission
+          reviewForm.reset();
+          updateSeriesRating(result.seriesId);
+          window.location.href = `/series/${result.seriesId}`;
 
         } else {
           alert('Error adding review');
         }
       } catch (error) {
         alert('Error adding review');
+        console.log(error);
       }
     });
   });
+
+  async function updateSeriesRating(seriesId){
+    try {
+      const response = await fetch("/api/series", {
+          method: 'PUT',
+          body: JSON.stringify({
+            seriesId: seriesId
+          })
+        });
+    }
+    catch (error){
+      console.log(error);
+    }
+  }
 </script>

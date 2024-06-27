@@ -120,6 +120,7 @@ export async function POST(context) {
     newSeries.description = description || 'No description available';
     newSeries.category = category || 'No category';
     newSeries.image = image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkua4zc6vGKg6FGl5tqsmqbbva__CLi84gvQ&s";
+    newSeries.numberOfReviews = 0;
 
 	try {
         // newSeries.id = await db.select({ value: count(Series.id) }).from(Series); // No se si estan bien la mayuscula en Series
@@ -137,4 +138,37 @@ export async function POST(context) {
     }
 
 	return context.redirect("/");
+}
+
+function getSeriesRating(seriesReviews){
+    if (seriesReviews.length === 0) {
+        return 0;
+      }
+    
+      const totalRating = seriesReviews.reduce((accum, review) => accum += review.rating, 0);
+      return totalRating / seriesReviews.length;
+}
+
+export async function PUT(context){
+    try{
+        const body = await context.request.json();
+        const seriesId = body.seriesId;
+        const sereisReview = await db.select().from(Review).where(eq(Review.seriesId, seriesId));
+        const newRating = getSeriesRating(sereisReview);
+        await db.update(Series).set({
+            rating: newRating,
+            numberOfReviews: sereisReview.length
+        }).where(eq(Series.id, seriesId));
+        return new Response(JSON.stringify({ message: "Rating updated" }), {
+            status: 201
+        });
+    }
+    catch (error){
+        console.log(error);
+        return new Response(JSON.stringify({ error: "Error adding series" }), {
+            status: 500
+        });
+    }
+
+    
 }
