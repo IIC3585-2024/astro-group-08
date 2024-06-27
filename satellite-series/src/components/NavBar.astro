@@ -1,5 +1,7 @@
 
 ---
+import FilterModal from "./FilterModal.astro";
+
 const loggedIn = false;
 const { user }: any = Astro.locals;
 
@@ -11,9 +13,15 @@ const { user }: any = Astro.locals;
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
       <div class="flex md:order-1">
-
+        <button type="button" id="filters-button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M1 5h1.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 1 0 0-2H8.576a3.228 3.228 0 0 0-6.152 0H1a1 1 0 1 0 0 2Zm18 4h-1.424a3.228 3.228 0 0 0-6.152 0H1a1 1 0 1 0 0 2h10.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 0 0 0-2Zm0 6H8.576a3.228 3.228 0 0 0-6.152 0H1a1 1 0 0 0 0 2h1.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 0 0 0-2Z"/>
+        </svg>
+          <span class="sr-only">Icon description</span>
+          </button>
         <div class="hidden md:block relative">
           <!-- Desktop search input -->
+           
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <!-- Search icon -->
           </div>
@@ -58,25 +66,35 @@ const { user }: any = Astro.locals;
     </div>
   </nav>
 
+  <FilterModal />
+
 
 
   <script>
-    import { titleFilter } from '../stores/SearchStore';
+    import { isModalOpen, categoryFilter, serviceFilter, minRatingFilter, maxRatingFilter, titleFilter } from '../stores/SearchStore';
   
     const navigateToSeries = () => {
       const searchValue = titleFilter.get();
+      const categoryValue = categoryFilter.get();
+      const serviceValue = serviceFilter.get();
+      const minRatingValue = minRatingFilter.get();
+      const maxRatingValue = maxRatingFilter.get();
       const url = new URL('/', window.location.origin);
       if (searchValue) url.searchParams.append('title', searchValue);
+      if (categoryValue) url.searchParams.append('category', categoryValue);
+      if (serviceValue) url.searchParams.append('service', serviceValue);
+      if (minRatingValue) url.searchParams.append('minRating', minRatingValue);
+      if (maxRatingValue) url.searchParams.append('maxRating', maxRatingValue);
       window.location.href = url.toString();
     };
   
     function setTitleFilter(value) {
       titleFilter.set(value);
-
     }
   
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('search-navbar');
+      const filtersButton = document.getElementById('filters-button');
       if (searchInput) {
         searchInput.addEventListener('input', (e:any) => {
           const searchValue = e?.target?.value || "";
@@ -95,6 +113,13 @@ const { user }: any = Astro.locals;
             navigateToSeries();
           });
         }
+      }
+      if(filtersButton){
+        filtersButton.addEventListener('click', () => {
+
+          isModalOpen.set(true);
+
+        });
       }
     });
   </script>
